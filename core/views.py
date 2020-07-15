@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.shortcuts import render
+from django.views import generic
 
-def index(request):
-    return render(request, "page/index.html")
+
+class HomeView(generic.TemplateView):
+    template_name = 'index.html'
