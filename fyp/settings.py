@@ -21,8 +21,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_countries',
     'crispy_forms',
-    'core'
+    'core',
+    'cart',
 ]
 
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')

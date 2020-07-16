@@ -1,4 +1,5 @@
 from django import forms
+from django_countries.widgets import CountrySelectWidget
 
 
 class ContactForm(forms.Form):

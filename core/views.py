@@ -9,7 +9,6 @@ from .forms import ContactForm
 class HomeView(generic.TemplateView):
     template_name = 'index.html'
 
-
 class ContactView(generic.FormView):
     form_class = ContactForm
     template_name = 'contact.html'
