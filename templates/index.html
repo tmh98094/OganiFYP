@@ -1,83 +1,26 @@
-{% extends "base.html" %}
+{% extends "base1.html" %}
 {% load static %}
 {% block content %}
 
     <!-- Hero Section Begin -->
-    <section class="hero">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="hero__categories">
-                        <div class="hero__categories__all">
-                            <i class="fa fa-bars"></i>
-                            <span>All departments</span>
-                        </div>
-                        <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                            <li><a href="#">Fresh Berries</a></li>
-                            <li><a href="#">Ocean Foods</a></li>
-                            <li><a href="#">Butter & Eggs</a></li>
-                            <li><a href="#">Fastfood</a></li>
-                            <li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
-                            <li><a href="#">Fresh Bananas</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-9">
-                    <div class="hero__search">
-                        <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input type="text" placeholder="What do yo u need?">
-                                <button type="submit" class="site-btn">SEARCH</button>
-                            </form>
-                        </div>
-                        <div class="hero__search__phone">
-                            <div class="hero__search__phone__icon">
-                                <i class="fa fa-phone"></i>
-                            </div>
-                            <div class="hero__search__phone__text">
-                                <h5>+65 11.188.888</h5>
-                                <span>support 24/7 time</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="hero__item set-bg" data-setbg="static/img/hero/banner.jpg">
-                        <div class="hero__text">
-                            <span>FRUIT FRESH</span>
-                            <h2>Vegetable <br />100% Organic</h2>
-                            <p>Free Pickup and Delivery Available</p>
-                            <a href="#" class="primary-btn">SHOP NOW</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="container " style="padding:0 15px 0 15px; display:block;">
             <div class="row">
                 <div class="py-5 px-5 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                    <div style="background-color: aliceblue;">
+                    <div class="bg-light">
                     <svg class="py-5" style="width: 100px; margin: 0 0 0 100;" role="img" xmlns="http://www.w3.org/2000/svg"
                            fill="#1f4f7c" viewBox="0 0 64 64">
                            <title>Safe Foods</title>
                            <g id="Safe">
                            <path d="m57 53.27a2.448 2.448 0 0 1 -1.63 2.31l-15.37 5.42h-15l-12-4h-4v-13l5-2h6l15 3 2 2v3h-14l9 5h8l13.86-4.08a2.4 2.4 0 0 1 .69-.1 2.454 2.454 0 0 1 2.45 2.45z" fill="#ffdaaa"/><path d="m47 7v12a23.656 23.656 0 0 1 -4.4 14.14c-2.71 3.62-6.46 5.86-10.6 5.86-8.28 0-15-8.95-15-20v-12l15-4z" fill="#ebe5dd"/><path d="m47 7v12a23.656 23.656 0 0 1 -4.4 14.14c-2.71 3.62-6.46 5.86-10.6 5.86-4.28 0-8.13-2.39-10.86-6.22a11.984 11.984 0 0 0 6.86 2.22c4.14 0 7.89-2.24 10.6-5.86a23.656 23.656 0 0 0 4.4-14.14v-9.07z" fill="#c0ab91"/><path d="m40 19v4a1 1 0 0 1 -1 1h-3a1 1 0 0 0 -1 1v3a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1-1v-3a1 1 0 0 0 -1-1h-3a1 1 0 0 1 -1-1v-4a1 1 0 0 1 1-1h3a1 1 0 0 0 1-1v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h3a1 1 0 0 1 1 1z" fill="#57a4ff"/><path d="m9 41v18l-6 1v-20z" fill="#00d7df"/><path d="m56.62 50.51a3.415 3.415 0 0 0 -3.04-.55l-13.72 4.04h-7.6l-5.4-3h10.14a1 1 0 0 0 1-1v-3a1.033 1.033 0 0 0 -.29-.71l-2-2a1.014 1.014 0 0 0 -.51-.27l-15-3a1.355 1.355 0 0 0 -.2-.02h-6a.937.937 0 0 0 -.37.07l-3.63 1.45v-1.52a1 1 0 0 0 -.84-.99l-6-1a1.039 1.039 0 0 0 -.81.23 1.011 1.011 0 0 0 -.35.76v20a1 1 0 0 0 1 1 .86.86 0 0 0 .16-.01l6-1a1 1 0 0 0 .84-.99v-1h2.84l11.84 3.95a1.185 1.185 0 0 0 .32.05h15a.919.919 0 0 0 .33-.06l15.37-5.42a3.449 3.449 0 0 0 2.3-3.25 3.411 3.411 0 0 0 -1.38-2.76zm-48.62 7.64-4 .67v-17.64l4 .67zm47.04-3.52-15.21 5.37h-14.67l-11.84-3.95a1.185 1.185 0 0 0 -.32-.05h-3v-11.32l4.19-1.68h5.71l14.61 2.92 1.49 1.49v1.59h-13a1 1 0 0 0 -.49 1.87l9 5a.947.947 0 0 0 .49.13h8a.863.863 0 0 0 .28-.04l13.87-4.08a1.413 1.413 0 0 1 1.27.23 1.446 1.446 0 0 1 -.38 2.52z"/><path d="m32 40c8.822 0 16-9.421 16-21v-12a1 1 0 0 0 -.742-.966l-15-4a1 1 0 0 0 -.516 0l-15 4a1 1 0 0 0 -.742.966v12c0 11.579 7.178 21 16 21zm-14-32.231 14-3.734 14 3.734v11.231c0 10.477-6.28 19-14 19s-14-8.523-14-19z"/><path d="m28 25v3a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-3h3a2 2 0 0 0 2-2v-4a2 2 0 0 0 -2-2h-3v-3a2 2 0 0 0 -2-2h-4a2 2 0 0 0 -2 2v3h-3a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2zm-3-6h3a2 2 0 0 0 2-2v-3h4v3a2 2 0 0 0 2 2h3v4h-3a2 2 0 0 0 -2 2v3h-4v-3a2 2 0 0 0 -2-2h-3z"/><path d="m52 8h2v-2h2v-2h-2v-2h-2v2h-2v2h2z"/><path d="m62 10h-2v-2h-2v2h-2v2h2v2h2v-2h2z"/><path d="m48 33v2h-2v2h2v2h2v-2h2v-2h-2v-2z"/><path d="m56 27h-2v2h-2v2h2v2h2v-2h2v-2h-2z"/><path d="m10 8h2v-2h2v-2h-2v-2h-2v2h-2v2h2z"/><path d="m4 14h2v-2h2v-2h-2v-2h-2v2h-2v2h2z"/><path d="m14 33v2h-2v2h2v2h2v-2h2v-2h-2v-2z"/><path d="m10 33v-2h2v-2h-2v-2h-2v2h-2v2h2v2z"/></g>
                     </svg>
-                    <div class="text">
+                    <div class="text ">
                         <h2 class="text-uppercase text-center" style="font-size: large; font-weight:bold">Food Safety Guaranteed</h2>
                         <p class="pt-3 card-body text-center"> SurFood ensures our verified dealers have food handlers certificates and all of the products and foods are safe to consume.</p>
                     </div>
                     </div>
                 </div>
                 <div class="py-5 px-5 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                    <div style="background-color: aliceblue;">
+                    <div class="bg-light">
                         <svg class="py-5" style="width: 100px; margin: 0 0 0 100;" role="img" xmlns="http://www.w3.org/2000/svg"
                                fill="#1f4f7c" viewBox="0 0 512 512">
                                <title>Cheaper Foods</title>
@@ -88,7 +31,7 @@
                         </div>
                 </div>
                 <div class="py-5 px-5 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                    <div style="background-color: aliceblue;">
+                    <div class="bg-light">
                         <svg class="py-5" style="width: 100px; margin: 0 0 0 100;" role="img" xmlns="http://www.w3.org/2000/svg"
                                fill="#1f4f7c" viewBox="0 0 512 512.00002">
                                <title>Save Environment</title>
@@ -100,8 +43,6 @@
                         </div>
                 </div>
             </div>
-    </section>
-    <!-- Hero Section End -->
 
     <!-- Categories Section Begin -->
     <section class="categories">
