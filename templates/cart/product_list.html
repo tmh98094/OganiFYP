@@ -155,13 +155,13 @@
                         <div class="col-lg-4 col-md-6 col-sm-6">
                             <div class="product__item">
                                 <div class="product__item__pic set-bg">
-                                    <a><img src="{{ product.image.url }}" class="img-fluid"></a>
+                                    <a href="{{ product.get_absolute_url }}"><img src="{{ product.image.url }}" class="img-fluid"></a>
                                     <ul class="product__item__pic__hover">
                                         <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                                     </ul>
                                 </div>
                                 <div class="product__item__text">
-                                    <h6><a href="#">{{ product.title }}</a></h6>
+                                    <h6><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h6>
                                     <h6>Expired on: {{ product.expired }}</h6>
                                     <h5>RM{{ product.price }}</h5>
                                 </div>
