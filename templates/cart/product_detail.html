@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-
+    
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="/static/img/breadcrumb.jpg">
         <div class="container">
@@ -24,10 +24,10 @@
     <section class="product-details spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 col-md-6 card">
+                <div class="col-lg-6 col-md-6">
                     <div class="product__details__pic">
                         <div class="product__details__pic__item">
-                            <img class="product__details__pic__item--large"
+                            <img class="product__details__pic__item--large featured-products-details"
                                 src={{ product.image.url}} alt="">
                         </div>
                         <div class="product__details__pic__slider owl-carousel">
@@ -37,7 +37,7 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__text">
                         <h3>{{ product.title }}</h3>
-                        <div class="product__details__price">RM {{ product.price }}</div>
+                        <div class="product__details__price">RM {{ product.get_price }}</div>
                         <div class="product__details__price"><span style="color:black; font-size:large">Expiry Date: {{ product.expired }}</span></div>
                         <p>{{ product.description }}</p>
                         <form method="POST">
@@ -48,7 +48,6 @@
                             </div>
                             </div>
                         <button href="#" class="primary-btn">ADD TO CART</button>
-                        <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                         </form>
                         <ul>
                             <li><b>Availability</b> <span>{{ product.stock_quantity }}</span></li>

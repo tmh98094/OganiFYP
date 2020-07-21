@@ -40,7 +40,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='product_images')
     description = models.TextField()
     stock_quantity = models.IntegerField()
-    price = models.FloatField()
+    price = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     expired = models.DateField()
@@ -49,8 +49,16 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
+    def get_count(self):
+        return Product.objects.count()
+    
     def get_absolute_url(self):
         return reverse("cart:product-detail", kwargs={'slug':self.slug})
+
+    def get_price(self):
+        return "{:.2f}".format(self.price / 100)
+        
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(
@@ -59,6 +67,13 @@ class OrderItem(models.Model):
     quantity = models.PositiveIntegerField(default=1)
     def __str__(self):
         return f"{self.quantity} x {self.product.title}"
+    
+    def get_raw_total_item_price(self):
+        return self.quantity * self.product.price        
+    
+    def get_total_item_price(self):
+        price = self.get_raw_total_item_price()
+        return "{:.2f}".format(price / 100)
 
 
 class Order(models.Model):
@@ -79,6 +94,25 @@ class Order(models.Model):
     def reference_number(self):
         return f"ORDER-{self.pk}"
 
+    def get_raw_subtotal(self):
+        total = 0
+        for order_item in self.items.all():
+            total += order_item.get_raw_total_item_price()
+        return total
+
+    def get_subtotal(self):
+        subtotal = self.get_raw_subtotal()
+        return "{:.2f}".format(subtotal / 100)
+
+    def get_raw_total(self):
+        subtotal = self.get_raw_subtotal()
+        # add tax, add delivery, subtract discounts
+        # total = subtotal - discounts + tax + delivery
+        return subtotal
+
+    def get_total(self):
+        total = self.get_raw_total()
+        return "{:.2f}".format(total / 100)
 
 class Payment(models.Model):
     order = models.ForeignKey(

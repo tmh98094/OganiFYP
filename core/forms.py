@@ -1,5 +1,6 @@
 from django import forms
 from django_countries.widgets import CountrySelectWidget
+from cart.models import OrderItem
 
 
 class ContactForm(forms.Form):
@@ -12,3 +13,8 @@ class ContactForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea(attrs={
         'placeholder': 'Your message'
     }))
+    
+class AddToCartForm(forms.ModelForm):
+    class Meta:
+        model = OrderItem
+        fields = ['quantity']
