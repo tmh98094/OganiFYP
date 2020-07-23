@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}    
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="/static/img/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Checkout</h2>
+                    <div class="breadcrumb__option">
+                        <a href="./index.html">Home</a>
+                        <span>Checkout</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Checkout Section Begin -->
+<section class="checkout spad">
+    <div class="container">
+        <div class="checkout__form">
+            <h4>Billing Details</h4>
+            {% if not request.user.is_authenticated %}
+            <div class="row mb-5">
+                <div class="col-md-12">
+                    <div class="border p-4 rounded" role="alert">
+                        You are nearly finished with your order.
+                        To finalize your order, please <a href="{% url 'account_login' %}">Login</a> or <a href="{% url 'account_signup' %}">Signup</a>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 90%;" aria-valuenow="90"
+                            aria-valuemin="0" aria-valuemax="100">90% complete</div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-8 mb-5 mb-md-0">
+                        {{ form | crispy }}
+                        </div>
+                        <div class="col-md-4">
+                            <div class="row mb-5">
+                                <div class="checkout__order">
+                                    <h4>Your Order</h4>
+                                    <div class="checkout__order__products">Products <span>Total</span></div>
+                                    <ul>
+                                    {% for item in order.items.all %}
+                                        <li>{{ item.product.title }}  x {{ item.quantity }}<span>{{ item.get_total_item_price }}</span></li>
+                                    {% endfor %}
+                                    </ul>
+                                    <div class="checkout__order__subtotal">Subtotal <span>{{order.get_subtotal}}</span></div>
+                                    <div class="checkout__order__total">Total <span>{{ order.get_total }}</span></div>
+                                    <div class="checkout__input__checkbox">
+                                        <label for="acc-or">
+                                            Create an account?
+                                            <input type="checkbox" id="acc-or">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
+                                        ut labore et dolore magna aliqua.</p>
+                                    <div class="checkout__input__checkbox">
+                                        <label for="payment">
+                                            Check Payment
+                                            <input type="checkbox" id="payment">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <div class="checkout__input__checkbox">
+                                        <label for="paypal">
+                                            Paypal
+                                            <input type="checkbox" id="paypal">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="site-btn">PLACE ORDER</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                {% endif %}
+        </div>
+    </div>
+</section>
+<!-- Checkout Section End -->
+
+{% endblock content %}

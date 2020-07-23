@@ -30,7 +30,6 @@
                             <thead>
                                 <tr>
                                     <th class="shoping__product">Products</th>
-                                    <th>Expired Date</th>
                                     <th>Price</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
@@ -40,12 +39,9 @@
                             <tbody>
                                 {% for item in order.items.all %}
                                 <tr>
-                                    <td class="shoping__cart__item"  style="font-size: 50%">
+                                    <td class="shoping__cart__item">
                                         <img src="{{ item.product.image.url }}" class="img-fluid" style="width: 100px; height:100px" alt="">
-                                        <h5>{{ item.product.title }}</h5>
-                                    </td>
-                                    <td>
-                                        <h5 >{{ item.product.expired }}</h5>
+                                        <h5>{{ item.product.title }} </br> Expired On: {{ item.product.expired }}</h5>
                                     </td>
                                     <td class="shoping__cart__price">
                                         RM {{ item.product.get_price }}
@@ -108,7 +104,7 @@
                             <li>Subtotal <span style="color:black">RM{{ order.get_subtotal }}</span></li>
                             <li>Total <span>RM{{ order.get_total }}</span></li>
                         </ul>
-                        <a href="#" class="primary-btn">PROCEED TO CHECKOUT</a>
+                        <a href="{% url 'cart:checkout' %}" class="primary-btn">PROCEED TO CHECKOUT</a>
                     </div>
                 </div>
             </div>

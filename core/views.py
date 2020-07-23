@@ -1,18 +1,28 @@
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin   
 from django.core.mail import send_mail
 from django.shortcuts import reverse
 from django.views import generic
 from .forms import ContactForm, AddToCartForm
-from cart.models import Product
+from cart.models import Product, Order
 from cart.utils import get_or_set_order_session
 
 
-class HomeView(generic.ListView):
-    template_name = 'index.html'
-    queryset = Product.objects.all()
+class ProfileView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'profile.html'
 
-    
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        context.update({
+            "orders": Order.objects.filter(user=self.request.user, ordered=True)
+        })
+        return context
+
+class HomeView(generic.TemplateView):
+    template_name = 'index.html'
+
+ 
 class ContactView(generic.FormView):
     form_class = ContactForm
     template_name = 'contact.html'

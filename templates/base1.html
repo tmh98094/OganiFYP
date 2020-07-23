@@ -5,7 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Django CrashCourse</title>
+    <title>SurFood {% block head_title %}{% endblock %}</title>
+    {% block extra_head %}
+    {% endblock %}
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
     <!-- Css Styles -->
@@ -28,41 +30,25 @@
         </div>
         <div class="humberger__menu__cart">
             <ul>
-                <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                <li><a href="{% url 'profile' %}" style="color:black;"><i class="fa fa-user"></i> Profile</a></li>
+                <li><a href="{% url 'cart:summary'%}" style="color:black;"><i class="fa fa-shopping-bag"></i> Cart</a></li>
             </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
-        </div>
-        <div class="humberger__menu__widget">
-            <div class="header__top__right__language">
-                <img src="/static/img/language.png" alt="">
-                <div>English</div>
-                <span class="arrow_carrot-down"></span>
-                <ul>
-                    <li><a href="#">Spanish</a></li>
-                    <li><a href="#">English</a></li>
-                </ul>
-            </div>
-            <div class="header__top__right__auth">
-                <a href="#"><i class="fa fa-user"></i> Login</a>
-            </div>
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
                 <li id='Home_Header' class="active"><a href="/">Home</a></li>
                 <li><a href={% url 'cart:product-list' %}>Shop</a></li>
-                <li><a href="#">Pages</a>
-                     <ul class="header__menu__dropdown">
-                        <li><a href="./shop-details.html">Shop Details</a></li>
-                        <li><a href="{% url 'cart:summary' %}">Shopping Cart</a></li>
-                        <li><a href="/checkout.html">Check Out</a></li>
-                        <li><a href="./blog-details.html">Blog Details</a></li>
-                    </ul>
-                </li>
+                <li><a href="{% url 'cart:summary'%}">Shopping Cart</a></li>
                 <li><a href="/contact/">Contact</a></li>
                 {% if request.user.is_staff %}
                 <li><a href="/">Staff</a></li>
                 {% endif %}
+                {% if not request.user.is_authenticated %}
+                <li><a href="{% url 'account_login' %}" style="color: #7fad39">Login</a></li>
+                {% else %}
+                <li><a href="{% url 'account_logout' %}" style="color: #7fad39">Logout</a></li>
+                {% endif %}
+
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -72,52 +58,12 @@
             <a href="#"><i class="fa fa-linkedin"></i></a>
             <a href="#"><i class="fa fa-pinterest-p"></i></a>
         </div>
-        <div class="humberger__menu__contact">
-            <ul>
-                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                <li>Free Shipping for all Order of $99</li>
-            </ul>
-        </div>
     </div>
 
     <!--Hamburger End-->
     <!--Header Start-->
     <header class="header">
         <div class="header__top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="header__top__left">
-                            <ul>
-                                <li><i class="fa fa-envelope"></i> hello@colorlib.com</li>
-                                <li>Free Shipping for all Order of $99</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="header__top__right">
-                            <div class="header__top__right__social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                                <a href="#"><i class="fa fa-pinterest-p"></i></a>
-                            </div>
-                            <div class="header__top__right__language">
-                                <img src="/static/img/language.png" alt="">
-                                <div>English</div>
-                                <span class="arrow_carrot-down"></span>
-                                <ul>
-                                    <li><a href="#">Spanish</a></li>
-                                    <li><a href="#">English</a></li>
-                                </ul>
-                            </div>
-                            <div class="header__top__right__auth">
-                                <a href="#"><i class="fa fa-user"></i> Login</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="container">
             <div class="row">
@@ -129,30 +75,30 @@
                 <div class="col-lg-6">
                     <nav class="header__menu pt-5 pl-2">
                         <ul>
-                                    <li class="active"><a href="/">Home</a></li>
+                                    <li class=""><a href="/">Home</a></li>
                                     <li><a href={% url 'cart:product-list' %}>Shop</a></li>
-                                    <li><a href="#">Pages</a>
-                                    <ul class="header__menu__dropdown">
-                                    <li><a href="./shop-details.html">Shop Details</a></li>
-                                    <li><a href="{% url 'cart:summary' %}">Shopping Cart</a></li>
-                                    <li><a href="./checkout.html">Check Out</a></li>
-                                    <li><a href="./blog-details.html">Blog Details</a></li>
-                                    </ul>
                                 </li>
                                 <li><a href="{% url 'contact' %}">Contact</a></li>
                                     {% if request.user.is_staff %}
                                         <li><a href="/">Staff</a></li>
                                     {% endif %}
+                                    {% if not request.user.is_authenticated %}
+                                    <li><a href="{% url 'account_login' %}" style="color: #7fad39">Login</a></li>
+                                    {% else %}
+                                    <li><a href="{% url 'account_logout' %}" style="color: #7fad39">Logout</a></li>
+                                    {% endif %}
+                                    
                         </ul>
                         </nav>
+                        <!--                            <li><a href="#"> <h5 class="pl-3 text-bottom"style="float:right; color:#7fad39;">Login</h5></a></li>
+-->
                 </div>
                 <div class="col-lg-3 pt-4">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+                            <li><a href="{% url 'profile' %}" style="color:black;"><i class="fa fa-user"></i> Profile</a></li>
+                            <li><a href="{% url 'cart:summary'%}" style="color:black;"><i class="fa fa-shopping-bag"></i> Cart</a></li>
                         </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
                     </div>
                 </div>
             </div>
@@ -163,9 +109,21 @@
     </header>
     <!--Header End-->
 
+
 <!-- Hero Section Begin -->
     <section class="hero">
         <div class="container">
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                <span class="alert-inner--icon"><i class="ni ni-like-2"></i></span>
+                <span class="alert-inner--text">{{ message }}</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                {% endfor %}
+            {% endif %}
             <div class="row">
                 <div class="col-lg-3">
                     <div class="hero__categories">
@@ -196,7 +154,7 @@
                                     All Categories
                                     <span class="arrow_carrot-down"></span>
                                 </div>
-                                <input type="text" placeholder="What do yo u need?">
+                                <input type="text" placeholder="What do you need?">
                                 <button type="submit" class="site-btn">SEARCH</button>
                             </form>
                         </div>
@@ -235,7 +193,7 @@
                                 <div class="carousel-content">
                                     <span>PREVENT FOOD WASTE</span>
                                     <h2>SAVE THE WORLD <br />REDUCE GREENHOUSE GASES</h2>
-                                    <p>*Food Waste contributed to 10% of greenhouse emission</p>
+                                    <p style="color:white; font-weight:bold">Food Waste contributed to 10% of greenhouse emission.</p>
                                     <a href="/cart/shop" class="primary-btn">SHOP NOW</a>    
                                 </div>
                             </div>
