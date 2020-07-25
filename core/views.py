@@ -10,7 +10,7 @@ from cart.utils import get_or_set_order_session
 
 
 class ProfileView(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'profile.html'
+    template_name = 'order.html'
 
     def get_context_data(self, **kwargs):
         context = super(ProfileView, self).get_context_data(**kwargs)
@@ -19,9 +19,9 @@ class ProfileView(LoginRequiredMixin, generic.TemplateView):
         })
         return context
 
-class HomeView(generic.TemplateView):
+class HomeView(generic.ListView):
     template_name = 'index.html'
-
+    queryset = Product.objects.all()
  
 class ContactView(generic.FormView):
     form_class = ContactForm
