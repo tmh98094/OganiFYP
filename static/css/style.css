@@ -114,6 +114,7 @@ ol {
   Helper CSS
 -----------------------*/
 
+
 .section-title {
 	margin-bottom: 50px;
 	text-align: center;
@@ -1812,7 +1813,6 @@ a small:hover {
 
 .product__details__text ul {
 	border-top: 1px solid #ebebeb;
-	padding-top: 40px;
 	margin-top: 50px;
 }
 

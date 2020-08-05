@@ -4,9 +4,18 @@ from django.db import models
 from django.db.models.signals import pre_save
 from django.shortcuts import reverse
 from django.utils.text import slugify
+from datetime import date
 
 User = get_user_model()
 
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+    
+    class Meta:
+        verbose_name_plural = "Categories"
+    
+    def __str__(self):
+        return (self.name)
 
 class Address(models.Model):
     ADDRESS_CHOICES = (
@@ -37,18 +46,20 @@ class Product(models.Model):
     slug = models.SlugField(unique=True)
     image = models.ImageField(upload_to='product_images')
     description = models.TextField()
-    stock_quantity = models.IntegerField()
+    stock_quantity = models.IntegerField(default=0)
     price = models.IntegerField(default=0)
+    pickup_location = models.CharField(max_length=150, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     expired = models.DateField()
     active = models.BooleanField(default=False)
+    primary_category = models.ForeignKey(Category, related_name="primary_products", blank=True, null=True,on_delete=models.CASCADE)
+    secondary_categories = models.ManyToManyField(Category, blank=True)
 
     def __str__(self):
         return self.title
 
-    def get_count(self):
-        return Product.objects.count()
+
     
     def get_absolute_url(self):
         return reverse("cart:product-detail", kwargs={'slug':self.slug})
@@ -61,6 +72,21 @@ class Product(models.Model):
 
     def get_price(self):
         return "{:.2f}".format(self.price / 100)
+    
+    def get_date(self):
+        return date.today() > self.expired
+    
+    @property
+    
+    def in_stock(self):
+        return self.stock_quantity > 0;
+    
+    def get_count(self):
+        product = Product.objects.all()
+        datenow = date.today()
+        filter = product.filter(expired__gte = datenow)
+        filtered = filter.count()
+        return filtered
         
 
 
@@ -69,8 +95,9 @@ class OrderItem(models.Model):
         "Order", related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
+    
     def __str__(self):
-        return f"{self.quantity} x {self.product.title}"
+        return f"#{self.order} | {self.quantity} x {self.product.title}"
     
     def get_raw_total_item_price(self):
         return self.quantity * self.product.price        
@@ -85,6 +112,8 @@ class Order(models.Model):
     start_date = models.DateTimeField(auto_now_add=True)
     ordered_date = models.DateTimeField(blank=True, null=True)
     ordered = models.BooleanField(default=False)
+    collected = models.BooleanField(default=False)
+    
 
     billing_address = models.ForeignKey(
         Address, related_name='billing_address', blank=True, null=True, on_delete=models.SET_NULL)
@@ -92,7 +121,7 @@ class Order(models.Model):
         Address, related_name='shipping_address', blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return self.reference_number
+        return f"#{self.reference_number} | Payment: {self.ordered}"
 
     @property
     def reference_number(self):
@@ -117,6 +146,10 @@ class Order(models.Model):
     def get_total(self):
         total = self.get_raw_total()
         return "{:.2f}".format(total / 100)
+    
+    def collected_status(self):
+        status = self.collected_status()
+        return status
 
 class Payment(models.Model):
     order = models.ForeignKey(
@@ -134,7 +167,7 @@ class Payment(models.Model):
 
     @property
     def reference_number(self):
-        return f"PAYMENT-{self.order}-{self.pk}"
+        return f"PAYMENT-{self.order}"
     
     
 def pre_save_product_receiver(sender, instance, *args, **kwargs):

@@ -40,19 +40,28 @@
                         <div class="product__details__price">RM {{ product.get_price }}</div>
                         <div class="product__details__price"><span style="color:black; font-size:large">Expiry Date: {{ product.expired }}</span></div>
                         <p>{{ product.description }}</p>
-                        <form method="POST">
-                            {% csrf_token %}
-                            <div>
-                            <div class="product__details__quantity quantity" style="width:80px;">
-                            {{ form | crispy }}
+                        {% if product.in_stock %}
+                            {% if product.get_date %}
+                            <p class="mt-4" style="color:red;font-weight:bold"> Sorry, this item has expired. Please stay tuned for next batch. </p>
+                            {% else %}
+                                <form method="POST">
+                                {% csrf_token %}
+                                <div>
+                                <div class="" style="">
+                                {{ form | crispy }}
+                                </div>
+                                </div>
+                                <button href="#" class="primary-btn">ADD TO CART</button>
+                                </form>
+                            {% endif %}
+                        {% else %}
+                            <div class="product__details__quantity text-center">
+                            <p class="mt-4" style="color:red;font-weight:bold"> Sorry, this item is out of stock. </p>
                             </div>
-                            </div>
-                        <button href="#" class="primary-btn">ADD TO CART</button>
-                        </form>
+                        {% endif %}
                         <ul>
                             <li><b>Availability</b> <span>{{ product.stock_quantity }}</span></li>
-                            <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
-                            <li><b>Weight</b> <span>0.5 kg</span></li>
+                            <li><b>Pick-up Location</b> <span><samp>{{ product.pickup_location }}</samp></span></li>
                             <li><b>Share on</b>
                                 <div class="share">
                                     <a href="#"><i class="fa fa-facebook"></i></a>

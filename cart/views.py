@@ -7,13 +7,33 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, reverse, redirect
 from django.views import generic
 from .forms import AddToCartForm, AddressForm
-from .models import Product, OrderItem, Address, Payment, Order
+from .models import Product, OrderItem, Address, Payment, Order, Category
 from .utils import get_or_set_order_session
+from django.db.models import Q
+from django.utils import timezone
+from datetime import timedelta
+import datetime
+
 
 
 class ProductListView(generic.ListView):
     template_name = 'cart/product_list.html'
-    queryset = Product.objects.all()
+
+    def get_queryset(self):
+        qs = Product.objects.all()
+        category = self.request.GET.get('category', None)
+        if category:
+            qs = qs.filter(Q(primary_category__name=category) |
+                           Q(secondary_categories__name=category)).distinct()
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super(ProductListView, self).get_context_data(**kwargs)
+        context.update({
+            "categories": Category.objects.values("name")
+        })
+        return context
+    
 
 class ProductDetailView(generic.FormView):
     template_name = 'cart/product_detail.html'
@@ -24,6 +44,12 @@ class ProductDetailView(generic.FormView):
 
     def get_success_url(self):
         return reverse("cart:product-list")
+
+    def get_form_kwargs(self):
+        kwargs = super(ProductDetailView, self).get_form_kwargs()
+        kwargs["product_id"] = self.get_object().id
+        return kwargs
+    
 
     def form_valid(self, form):
         messages.info(

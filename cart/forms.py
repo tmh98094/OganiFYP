@@ -1,22 +1,36 @@
 from django.contrib.auth import get_user_model
 from django import forms
 from .models import (
-    OrderItem, Product, Address
+    OrderItem, Product, Address, Order
 )
 
 User = get_user_model()
 
 
 class AddToCartForm(forms.ModelForm):
+    quantity = forms.IntegerField(min_value=1)
+
 
     class Meta:
         model = OrderItem
         fields = ['quantity']
+        
+    def __init__(self, *args, **kwargs):
+        self.product_id = kwargs.pop('product_id')
+        product = Product.objects.get(id=self.product_id)
+        super().__init__(*args, **kwargs)
         Product.objects.all()
+
+    def clean(self):
+        product_id = self.product_id
+        product = Product.objects.get(id=self.product_id)
+        quantity = self.cleaned_data['quantity']
+        if product.stock_quantity < quantity:
+            raise forms.ValidationError(
+                f"The maximum stock available is {product.stock_quantity}")
 
 
 class AddressForm(forms.Form):
-
     shipping_address_line_1 = forms.CharField(required=False)
     shipping_address_line_2 = forms.CharField(required=False)
     shipping_zip_code = forms.CharField(required=False)
@@ -82,3 +96,4 @@ class AddressForm(forms.Form):
                                "Please fill in this field")
             if not data.get('billing_city', None):
                 self.add_error("billing_city", "Please fill in this field")
+            

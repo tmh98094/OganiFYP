@@ -12,10 +12,9 @@ urlpatterns = [
     path('contact/', views.ContactView.as_view(), name='contact'),
     path('cart/', include('cart.urls', namespace='cart')),
     path('staff/', include('staff.urls', namespace='staff')),
-    path('profile/', views.ProfileView.as_view(), name='profile'),
-    
+    path('order/', views.OrderView.as_view(), name='order'),    
+    path('account/', views.AccountView.as_view(), name='account'),    
 ]
-
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL,
                           document_root=settings.STATIC_ROOT)

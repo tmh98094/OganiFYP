@@ -30,8 +30,8 @@
         </div>
         <div class="humberger__menu__cart">
             <ul>
-                <li><a href="#" style="color:black;"><i class="fa fa-user"></i> Profile</a></li>
-                <li><a href="{% url 'profile' %}" style="color:black;"><i class="fa fa-history"></i> Order</a></li>
+                <li><a href="{% url 'account' %}" style="color:black;"><i class="fa fa-user"></i> Account</a></li>
+                <li><a href="{% url 'order' %}" style="color:black;"><i class="fa fa-history"></i> Order</a></li>
                 <li><a href="{% url 'cart:summary'%}" style="color:black;"><i class="fa fa-shopping-bag"></i> Cart</a></li>
             </ul>
         </div>
@@ -97,8 +97,8 @@
                 <div class="col-lg-3 pt-4">
                     <div class="header__cart">
                         <ul>   
-                            <li><a href="#" style="color:black;"><i class="fa fa-user"></i> Profile</a></li>
-                            <li><a href="{% url 'profile' %}" style="color:black;"><i class="fa fa-history"></i> Order</a></li>
+                            <li><a href="{% url 'account' %}" style="color:black;"><i class="fa fa-user"></i> Account</a></li>
+                            <li><a href="{% url 'order' %}" style="color:black;"><i class="fa fa-history"></i> Order</a></li>
                             <li><a href="{% url 'cart:summary'%}" style="color:black;"><i class="fa fa-shopping-bag"></i> Cart</a></li>
                         </ul>
                     </div>
@@ -125,28 +125,31 @@
                 </button>
                 </div>
                 {% endfor %}
+            {% else %}
+                {% for message in messages %}
+                <div style="background-color:#cc3300;color:white;" class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                <span class="alert-inner--icon"><i class="ni ni-like-2"></i></span>
+                <span class="alert-inner--text">{{ message }}</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                {% endfor %}
             {% endif %}
+
             <div class="row">
                 <div class="col-lg-3">
                     <div class="hero__categories">
                         <div class="hero__categories__all">
                             <i class="fa fa-bars"></i>
-                            <span>All departments</span>
+                            <span>Categories</span>
                         </div>
-                        <ul>
-                            <li><a href="#">Fresh Meat</a></li>
-                            <li><a href="#">Vegetables</a></li>
-                            <li><a href="#">Fruit & Nut Gifts</a></li>
-                            <li><a href="#">Fresh Berries</a></li>
-                            <li><a href="#">Ocean Foods</a></li>
-                            <li><a href="#">Butter & Eggs</a></li>
-                            <li><a href="#">Fastfood</a></li>
-                            <li><a href="#">Fresh Onion</a></li>
-                            <li><a href="#">Papayaya & Crisps</a></li>
-                            <li><a href="#">Oatmeal</a></li>
-                            <li><a href="#">Fresh Bananas</a></li>
-                        </ul>
-                    </div>
+                            <ul>
+                                {% for category in categories %}
+                                    <li><a href="/cart/shop/?category={{ category.name }}">{{ category.name }}</a></li>
+                                {% endfor %}                        
+                            </ul>
+                        </div>
                 </div>
                 <div class="col-lg-9">
                     <div class="hero__search">
@@ -165,7 +168,7 @@
                                 <i class="fa fa-phone"></i>
                             </div>
                             <div class="hero__search__phone__text">
-                                <h5>+65 11.188.888</h5>
+                                <h5>+60 11-1122 9611</h5>
                                 <span>support 24/7 time</span>
                             </div>
                         </div>

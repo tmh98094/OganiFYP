@@ -16,5 +16,7 @@ class ProductForm(forms.ModelForm):
             'expired',
         ]
         labels = {
+            "price":"Price (5000 = RM 50.00)",
             "expired":"Expiry Date (YYYY-MM-DD)"
         }
+

@@ -1,0 +1,27 @@
+{% comment %} {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="site-section">
+        <div class="container pt-3 pb-5">
+            <div class="row justify-content-center">
+                <div class="col-md-7 pb-4">
+                    <h2 class="h3 mb-3 text-black text-center">Product Collect Status</h2>
+                </div>
+                <div class="col-md-12 justify-content-center pb-4"> 
+                  <h3 class="h5 mb-3 text-center">Are you sure the item has been collected?</h3>
+               </div>
+                <div class="col-md-2">
+                  <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy}}
+                    <button type='submit' class='btn btn-primary'>Yes</button>
+                    <a href="{% url 'staff:staff' %}" class='btn btn-primary'>Cancel</a>
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %} {% endcomment %}
