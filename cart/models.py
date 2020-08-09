@@ -1,4 +1,3 @@
-  
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models.signals import pre_save
@@ -46,16 +45,19 @@ class Product(models.Model):
     slug = models.SlugField(unique=True)
     image = models.ImageField(upload_to='product_images')
     description = models.TextField()
+    nutrition = models.TextField(null=True, blank=True)
     stock_quantity = models.IntegerField(default=0)
     price = models.IntegerField(default=0)
     pickup_location = models.CharField(max_length=150, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    produced = models.DateField(null=True, blank=True)
     expired = models.DateField()
     active = models.BooleanField(default=False)
     primary_category = models.ForeignKey(Category, related_name="primary_products", blank=True, null=True,on_delete=models.CASCADE)
     secondary_categories = models.ManyToManyField(Category, blank=True)
-
+    
+    
     def __str__(self):
         return self.title
 
@@ -113,7 +115,6 @@ class Order(models.Model):
     ordered_date = models.DateTimeField(blank=True, null=True)
     ordered = models.BooleanField(default=False)
     collected = models.BooleanField(default=False)
-    
 
     billing_address = models.ForeignKey(
         Address, related_name='billing_address', blank=True, null=True, on_delete=models.SET_NULL)
@@ -147,9 +148,9 @@ class Order(models.Model):
         total = self.get_raw_total()
         return "{:.2f}".format(total / 100)
     
-    def collected_status(self):
-        status = self.collected_status()
-        return status
+    
+    def get_collect_url(self):
+        return reverse("staff:confirm-collect", kwargs={'pk': self.pk})
 
 class Payment(models.Model):
     order = models.ForeignKey(
@@ -169,7 +170,7 @@ class Payment(models.Model):
     def reference_number(self):
         return f"PAYMENT-{self.order}"
     
-    
+
 def pre_save_product_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slugify(instance.title)

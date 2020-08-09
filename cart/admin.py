@@ -10,9 +10,17 @@ class AddressAdmin(admin.ModelAdmin):
         'address_type',
     ]
     
+class OrderAdmin(admin.ModelAdmin):
+    list_display = [
+    'user',
+    'id',
+    'ordered',
+    'collected',
+    ]
+    
 admin.site.register(Address, AddressAdmin)
 admin.site.register(Product)
 admin.site.register(Category)
 admin.site.register(OrderItem)
-admin.site.register(Order)
+admin.site.register(Order, OrderAdmin)
 admin.site.register(Payment)

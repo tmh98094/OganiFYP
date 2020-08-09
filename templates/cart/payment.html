@@ -63,7 +63,8 @@
                 </div>
             </div>
 
-            <div id='paymentInfo'>
+            <div id='paymentInfo' class="text-center">
+            <h2> Make Payment </h2>
                 <p>Order total: ${{ order.get_total }}</p>
                 <h4>Select a payment method</h4>
                 <div id="paypal-button-container"></div>
@@ -71,14 +72,17 @@
         </div>
     </div>
 </div>
+
 {% endblock content %}
+
 
 {% block scripts %}
 
-<script
-    src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}">
+<script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}">
 </script>
+
 <script>
+
     const loader = document.getElementById('loader');
     const paymentInfo = document.getElementById('paymentInfo');
 
@@ -101,7 +105,7 @@
             }
         }
         return cookieValue;
-    }1
+    }
     var csrftoken = getCookie('csrftoken');
 
     function sendOrderConfirmed(details) {

@@ -6,15 +6,12 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <h2 class="text-black">Staff Portal</h2>
+                <h2 class="text-black mb-3">Manage Collect Status</h2>
+                <a href="{% url 'staff:staff' %}"><span><</span>Back</a><br/>
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">
-                            Welcome, {{ request.user.first_name }} {{ request.user.last_name }}
                         </h5>
-                        <a href="{% url 'staff:product-list' %}">Products</a> <br/>
-                        <a href="{% url 'staff:order-collect' %}">Manage Collect Status</a>
-                        <hr />
 
                         <h5 class="card-title">Recent orders</h5>
                         <div class="site-blocks-table" style="overflow-x:auto;">
@@ -25,8 +22,8 @@
                                         <th>Date</th>
                                         <th>User</th>
                                         <th>Amount</th>
-                                        <th>Payment Status</th>
-                                        <th>Collect Status</td>
+                                        <th>Collected</td>
+                                        <th>Change Collect Status</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -36,8 +33,16 @@
                                         <td>{{ order.ordered_date }}</td>
                                         <td>{{ order.user.username }}</td>
                                         <td>${{ order.get_total }}</td>
-                                        <td>{% if order.ordered %}Paid{% else %}Not paid{% endif %}</td>
                                         <td>{% if order.collected %}Yes{% else %}No{% endif %}</td>
+                                        {% if order.collected %}
+                                            <td>Collected</td>
+                                        {% else %}
+                                        <form method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            {{ form }}
+                                            <td><a href="{{ order.get_collect_url }}" style="color:green;">Collect</a></td>
+                                        </form>
+                                        {% endif %}                                        
                                     </tr>
                                     {% empty %}
                                     <tr>

@@ -1,12 +1,11 @@
 #Creating order and setting it in the session#
-#Geting order from the session#
+#Getting order from the session#
 
 from .models import Order
 
 
 def get_or_set_order_session(request):
     order_id = request.session.get('order_id', None)
-
     if order_id is None:
         order = Order()
         order.save()

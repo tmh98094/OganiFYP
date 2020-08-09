@@ -38,33 +38,33 @@
                     <div class="filter__item">
                         <div class="row">
                             <div class="col-lg-4 col-md-5">
-                                <div class="filter__sort">
+                                <!-- <div class="filter__sort">
                                     <span>Sort By</span>
                                     <select>
                                         <option value="0">Default</option>
                                         <option value="0">Default</option>
                                     </select>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="col-lg-4 col-md-4">
                                 <div class="filter__found">
                                 {% for product in object_list|slice:":1" %}
-                                        <h6>{{ product.get_count}} products found.</h6>
+                                        <h6>{{ product.get_count}} products found.</h6><br/>
                                         {{ break }}
+                                {% empty %}
+                                            <h6>0 products found.</h6><br/>
+                                            <p style="color:red">Sorry, currently there is no items available.</p>
+
                                 {% endfor %}
-                                </div>
                             </div>
-                            <div class="col-lg-4 col-md-3">
-                                <div class="filter__option">
-                                    <span class="icon_grid-2x2"></span>
-                                    <span class="icon_ul"></span>
-                                </div>
+                            </div>
+                            <div class="row col-lg-12 text-center justify-content-center">                            
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         {% for product in object_list %}
-                            {% if product.get_date %}
+                            {% if product.get_date %} {% comment %} if the item has expired, return true, else false. {% endcomment %}
                             {% else %}
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="product__item">

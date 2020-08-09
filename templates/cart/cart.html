@@ -53,7 +53,7 @@
                                                 &minus;
                                             </a>
                                         </div>
-                                        <input type="text" class="form-control text-center" value="{{ item.quantity }}">
+                                        <input type="text" class="form-control text-center" disabled value="{{ item.quantity }}">
                                         <div class="input-group-append">
                                             <a href="{% url 'cart:increase-quantity' item.id%}" class="btn btn-outline-primary">
                                                 &plus;
@@ -87,15 +87,6 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="shoping__continue">
-                        <div class="shoping__discount">
-                            <h5>Discount Codes</h5>
-                            <form action="#">
-                                <input type="text" placeholder="Enter your coupon code">
-                                <button type="submit" class="site-btn">APPLY COUPON</button>
-                            </form>
-                        </div>
-                    </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="shoping__checkout">

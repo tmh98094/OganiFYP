@@ -104,6 +104,10 @@ a:focus {
 ;
 }
 
+.date_style {
+	margin: 10px 0 10px 0;
+}
+
 ul,
 ol {
 	padding: 0;
@@ -1793,8 +1797,11 @@ a small:hover {
 	margin-bottom: 15px;
 }
 
-.product__details__text p {
-	margin-bottom: 45px;
+.product__details__text .row{
+	margin-bottom:20px;
+}
+
+.product__details__text p{
 }
 
 .product__details__text .primary-btn {

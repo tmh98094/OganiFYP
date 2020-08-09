@@ -7,10 +7,11 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <h2 class="text-black mb-3">Staff Portal - Products</h2>
+                <a href="{% url 'staff:staff' %}"><span><</span>Back</a><br/>
                 <a href="{% url 'staff:product-create' %}">Create a new product</a>
                 <div class="card mt-3">
                     <div class="card-body">
-                        <div class="site-blocks-table">
+                        <div class="site-blocks-table" style="overflow-x:auto;">
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -31,7 +32,7 @@
                                         {% else %}
                                             <td style="color:green">Not Expired</td>
                                         {% endif %}
-                                        <td>${{ product.get_price }}</td>
+                                        <td>RM {{ product.get_price }}</td>
                                         <td>
                                             <a href="{{ product.get_update_url }}">Update</a>
                                             <a href="{{ product.get_delete_url }}">| Delete</a>

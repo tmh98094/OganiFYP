@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="text-center justify-content-center">
+<h2>{{orders.reference_number}} collection status</h2>
+<div class="my-5 ml-3">
+    <form style="color:red" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form | crispy}}
+        <br/><button type='submit' class='btn btn-primary '>Submit</button>
+    </form> 
+</div>
+</div>
+{% endblock content %}

@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
@@ -72,8 +73,12 @@ WSGI_APPLICATION = 'fyp.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'surfood',
+        'USER': 'postgres',
+        'PASSWORD': 'BATTLE23Z',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
@@ -101,13 +106,25 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 LOGIN_REDIRECT_URL = '/'
 SITE_ID = 1
-
+DATE_INPUT_FORMATS = ['%d-%m-%Y']
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LANGUAGE_CODE = 'en-us'
@@ -126,8 +143,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-PAYPAL_CLIENT_ID=env('PAYPAL_SANDBOX_CLIENT_ID')
-PAYPAL_SECRET_KEY=env('PAYPAL_SANDBOX_SECRET_KEY')
+PAYPAL_CLIENT_ID = env('PAYPAL_SANDBOX_CLIENT_ID')
+PAYPAL_SECRET_KEY = env('PAYPAL_SANDBOX_SECRET_KEY')
 
 if DEBUG is False:
     SESSION_COOKIE_SECURE = True
@@ -144,12 +161,12 @@ if DEBUG is False:
 
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': '',
-            'USER': '',
-            'PASSWORD': '',
-            'HOST': '',
-            'PORT': ''
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'surfood',
+            'USER': 'postgres',
+            'PASSWORD': 'BATTLE23Z',
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
         }
     }
 

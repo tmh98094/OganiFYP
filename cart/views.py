@@ -12,6 +12,7 @@ from .utils import get_or_set_order_session
 from django.db.models import Q
 from django.utils import timezone
 from datetime import timedelta
+from django.core.exceptions import ObjectDoesNotExist
 import datetime
 
 
@@ -34,6 +35,7 @@ class ProductListView(generic.ListView):
         })
         return context
     
+
 
 class ProductDetailView(generic.FormView):
     template_name = 'cart/product_detail.html'
@@ -75,6 +77,9 @@ class ProductDetailView(generic.FormView):
     def get_context_data(self, **kwargs):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
         context['product'] = self.get_object()
+        context.update({
+            "categories": Category.objects.values("name")
+        })
         return context
     
 class CartView(generic.TemplateView):
@@ -84,6 +89,9 @@ class CartView(generic.TemplateView):
     def get_context_data(self, **kwargs):
         context = super(CartView, self).get_context_data(**kwargs)
         context["order"] = get_or_set_order_session(self.request)
+        context.update({
+            "categories": Category.objects.values("name")
+        })
         return context
     
 class IncreaseQuantityView(generic.View):
@@ -96,7 +104,6 @@ class IncreaseQuantityView(generic.View):
 class DecreaseQuantityView(generic.View):
     def get(self, request, *args, **kwargs):
         order_item = get_object_or_404(OrderItem, id=kwargs['pk'])
-        
         if order_item.quantity <= 1:
             order_item.delete()
         else:
@@ -163,6 +170,9 @@ class CheckoutView(generic.FormView):
     def get_context_data(self, **kwargs):
         context = super(CheckoutView, self).get_context_data(**kwargs)
         context["order"] = get_or_set_order_session(self.request)
+        context.update({
+            "categories": Category.objects.values("name")
+        })
         return context
     
 class PaymentView(generic.TemplateView):
@@ -172,6 +182,9 @@ class PaymentView(generic.TemplateView):
         context = super(PaymentView, self).get_context_data(**kwargs)
         context["PAYPAL_CLIENT_ID"] = settings.PAYPAL_CLIENT_ID
         context['order'] = get_or_set_order_session(self.request)
+        context.update({
+            "categories": Category.objects.values("name")
+        })
         context['CALLBACK_URL'] = self.request.build_absolute_uri(
             reverse("cart:thank-you"))
         return context
@@ -194,10 +207,23 @@ class ConfirmOrderView(generic.View):
         return JsonResponse({"data": "Success"})
 
 
+
 class ThankYouView(generic.TemplateView):
     template_name = 'cart/thanks.html'
+    def get_context_data(self, **kwargs):
+        context = super(ThankYouView, self).get_context_data(**kwargs)
+        context.update({
+            "categories": Category.objects.values("name")
+        })
+        return context
     
 class OrderDetailView(LoginRequiredMixin, generic.DetailView):
     template_name = 'order_detail.html'
     queryset = Order.objects.all()
     context_object_name = 'order'
+    def get_context_data(self, **kwargs):
+        context = super(OrderDetailView, self).get_context_data(**kwargs)
+        context.update({
+            "categories": Category.objects.values("name")
+        })
+        return context

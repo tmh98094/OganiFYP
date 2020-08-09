@@ -7,9 +7,9 @@ from .models import (
 User = get_user_model()
 
 
+
 class AddToCartForm(forms.ModelForm):
     quantity = forms.IntegerField(min_value=1)
-
 
     class Meta:
         model = OrderItem
@@ -51,9 +51,10 @@ class AddressForm(forms.Form):
     def __init__(self, *args, **kwargs):
         user_id = kwargs.pop('user_id')
         super().__init__(*args, **kwargs)
-
-        user = User.objects.get(id=user_id)
-
+        if user_id == None:
+            user = User.objects.filter(id=user_id)
+        else:
+            user = User.objects.get(id=user_id)
         shipping_address_qs = Address.objects.filter(
             user=user,
             address_type='S'
@@ -96,4 +97,6 @@ class AddressForm(forms.Form):
                                "Please fill in this field")
             if not data.get('billing_city', None):
                 self.add_error("billing_city", "Please fill in this field")
+                
+
             

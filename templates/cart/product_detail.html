@@ -38,8 +38,34 @@
                     <div class="product__details__text">
                         <h3>{{ product.title }}</h3>
                         <div class="product__details__price">RM {{ product.get_price }}</div>
-                        <div class="product__details__price"><span style="color:black; font-size:large">Expiry Date: {{ product.expired }}</span></div>
-                        <p>{{ product.description }}</p>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <span style="font-weight:bold">Produced Date:</span><br/>
+                                <span class="">{{ product.produced | date:'d-m-Y' }}</span>
+                            </div>
+                        </div>
+            
+
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <span style="font-weight:bold">Expiry Date:</span> <br/>
+                                <span >{{ product.expired| date:'d-m-Y' }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <span style="font-weight:bold">Description:</span><br/>
+                            {{ product.description }}
+                            </div>      
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6">
+                                <span style="font-weight:bold">Nutrition Fact:</span><br/>
+                                {{ product.nutrition|linebreaks }}
+                            </div>      
+                        </div>
                         {% if product.in_stock %}
                             {% if product.get_date %}
                             <p class="mt-4" style="color:red;font-weight:bold"> Sorry, this item has expired. Please stay tuned for next batch. </p>
@@ -62,14 +88,6 @@
                         <ul>
                             <li><b>Availability</b> <span>{{ product.stock_quantity }}</span></li>
                             <li><b>Pick-up Location</b> <span><samp>{{ product.pickup_location }}</samp></span></li>
-                            <li><b>Share on</b>
-                                <div class="share">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                </div>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -84,7 +102,7 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                 <div class="product__details__tab__desc">
-                                    <h6>Tesco Cheras</h6>
+                                    <h6>{{ product.pickup_location }}</h6>
                                     <p>No.2, Jalan Midah 2, Taman Midah, 56000 Cheras, Wilayah Persekutuan Kuala Lumpur</p>
                                 </div>
                             </div>

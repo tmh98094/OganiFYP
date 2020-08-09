@@ -13,13 +13,17 @@ from django.db.models import Q
 
 class OrderView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'order.html'
+    
 
     def get_context_data(self, **kwargs):
         context = super(OrderView, self).get_context_data(**kwargs)
         context.update({
-            "orders": Order.objects.filter(user=self.request.user, ordered=True)
+            "orders": Order.objects.filter(user=self.request.user, ordered=True),
+            "categories": Category.objects.values("name")
         })
         return context
+    
+
 
 
 class AccountView(LoginRequiredMixin, generic.TemplateView):
@@ -27,9 +31,16 @@ class AccountView(LoginRequiredMixin, generic.TemplateView):
 
     def get_success_url(self):
         return reverse("account")
+    
+    def get_context_data(self, **kwargs):
+        context = super(AccountView, self).get_context_data(**kwargs)
+        context.update({
+            "categories": Category.objects.values("name")
+        })
+        return context
 
 class HomeView(generic.ListView):
-    template_name = 'index.html'
+    template_name = 'base1.html'
     
     def get_queryset(self):
         qs = Product.objects.all()
@@ -52,6 +63,21 @@ class ContactView(generic.FormView):
 
     def get_success_url(self):
         return reverse("contact")
+
+    def get_queryset(self):
+        qs = Product.objects.all()
+        category = self.request.GET.get('category', None)
+        if category:
+            qs = qs.filter(Q(primary_category__name=category) |
+                        Q(secondary_categories__name=category)).distinct()
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super(ContactView, self).get_context_data(**kwargs)
+        context.update({
+            "categories": Category.objects.values("name")
+        })
+        return context
 
     def form_valid(self, form):
         messages.info(
