@@ -76,7 +76,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'surfood',
         'USER': 'postgres',
-        'PASSWORD': 'BATTLE23Z',
+        'PASSWORD': '######',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -164,7 +164,7 @@ if DEBUG is False:
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'surfood',
             'USER': 'postgres',
-            'PASSWORD': 'BATTLE23Z',
+            'PASSWORD': '######',
             'HOST': '127.0.0.1',
             'PORT': '5432',
         }
