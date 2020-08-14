@@ -64,9 +64,9 @@
             </div>
 
             <div id='paymentInfo' class="text-center">
-            <h2> Make Payment </h2>
-                <p>Order total: ${{ order.get_total }}</p>
-                <h4>Select a payment method</h4>
+            <h2 style="font-weight:bold;margin-bottom:10px;"> Make Payment </h2>
+                <h5 style="margin-bottom:10px;">Order total: RM{{ order.get_total }}</h5>
+                <h4>Please select a payment method</h4>
                 <div id="paypal-button-container"></div>
             </div>
         </div>
@@ -78,7 +78,7 @@
 
 {% block scripts %}
 
-<script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}">
+<script src="https://www.paypal.com/sdk/js?client-id={{ PAYPAL_CLIENT_ID }}&currency=MYR">
 </script>
 
 <script>

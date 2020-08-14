@@ -24,8 +24,6 @@ class OrderView(LoginRequiredMixin, generic.TemplateView):
         return context
     
 
-
-
 class AccountView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'account.html'
 
@@ -53,6 +51,7 @@ class HomeView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
         context.update({
+            "products":Product.objects.all().order_by('-created'),
             "categories": Category.objects.values("name")
         })
         return context
@@ -86,7 +85,8 @@ class ContactView(generic.FormView):
         email = form.cleaned_data.get('email')
         message = form.cleaned_data.get('message')
         full_message = f"""
-            Received message below from {name}, {email}
+            Name :{name}
+            Email : {email}
             ________________________
             {message}
             """

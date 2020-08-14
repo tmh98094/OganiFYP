@@ -19,7 +19,6 @@ class Category(models.Model):
 class Address(models.Model):
     ADDRESS_CHOICES = (
         ('B', 'Billing'),
-        ('S', 'Shipping'),
     )
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -45,23 +44,26 @@ class Product(models.Model):
     slug = models.SlugField(unique=True)
     image = models.ImageField(upload_to='product_images')
     description = models.TextField()
-    nutrition = models.TextField(null=True, blank=True)
+    nutrition = models.TextField(null=True)
     stock_quantity = models.IntegerField(default=0)
     price = models.IntegerField(default=0)
-    pickup_location = models.CharField(max_length=150, blank=True)
+    pickup_location = models.CharField(max_length=150)
+    location_description = models.CharField(max_length=150)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    produced = models.DateField(null=True, blank=True)
+    produced = models.DateField(null=True)
     expired = models.DateField()
     active = models.BooleanField(default=False)
-    primary_category = models.ForeignKey(Category, related_name="primary_products", blank=True, null=True,on_delete=models.CASCADE)
+    primary_category = models.ForeignKey(Category, related_name="primary_products", null=True,on_delete=models.CASCADE)
     secondary_categories = models.ManyToManyField(Category, blank=True)
     
     
     def __str__(self):
         return self.title
 
-
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Product, self).save(*args, **kwargs) 
     
     def get_absolute_url(self):
         return reverse("cart:product-detail", kwargs={'slug':self.slug})
@@ -115,11 +117,8 @@ class Order(models.Model):
     ordered_date = models.DateTimeField(blank=True, null=True)
     ordered = models.BooleanField(default=False)
     collected = models.BooleanField(default=False)
-
     billing_address = models.ForeignKey(
         Address, related_name='billing_address', blank=True, null=True, on_delete=models.SET_NULL)
-    shipping_address = models.ForeignKey(
-        Address, related_name='shipping_address', blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return f"#{self.reference_number} | Payment: {self.ordered}"
@@ -162,7 +161,6 @@ class Payment(models.Model):
     successful = models.BooleanField(default=False)
     amount = models.FloatField()
     raw_response = models.TextField()
-
     def __str__(self):
         return self.reference_number
 
@@ -175,5 +173,5 @@ def pre_save_product_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slugify(instance.title)
 
-
+        
 pre_save.connect(pre_save_product_receiver, sender=Product)

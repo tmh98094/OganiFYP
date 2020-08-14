@@ -3,7 +3,7 @@ import json
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, reverse, redirect
 from django.views import generic
 from .forms import AddToCartForm, AddressForm
@@ -16,9 +16,9 @@ from django.core.exceptions import ObjectDoesNotExist
 import datetime
 
 
-
 class ProductListView(generic.ListView):
     template_name = 'cart/product_list.html'
+    paginate_by = 6
 
     def get_queryset(self):
         qs = Product.objects.all()
@@ -31,7 +31,7 @@ class ProductListView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
         context.update({
-            "categories": Category.objects.values("name")
+            "categories": Category.objects.values("name"),
         })
         return context
     
@@ -126,23 +126,8 @@ class CheckoutView(generic.FormView):
 
     def form_valid(self, form):
         order = get_or_set_order_session(self.request)
-        selected_shipping_address = form.cleaned_data.get(
-            'selected_shipping_address')
         selected_billing_address = form.cleaned_data.get(
             'selected_billing_address')
-
-        if selected_shipping_address:
-            order.shipping_address = selected_shipping_address
-        else:
-            address = Address.objects.create(
-                address_type='S',
-                user=self.request.user,
-                address_line_1=form.cleaned_data['shipping_address_line_1'],
-                address_line_2=form.cleaned_data['shipping_address_line_2'],
-                zip_code=form.cleaned_data['shipping_zip_code'],
-                city=form.cleaned_data['shipping_city'],
-            )
-            order.shipping_address = address
 
         if selected_billing_address:
             order.billing_address = selected_billing_address

@@ -73,7 +73,7 @@ class ProductCreateView(LoginRequiredMixin, StaffUserMixin, generic.CreateView):
         return super(ProductCreateView, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
-        context = super(ProductCreatetView, self).get_context_data(**kwargs)
+        context = super(ProductCreateView, self).get_context_data(**kwargs)
         context.update({
             "categories": Category.objects.values("name")
         })
@@ -107,7 +107,7 @@ class ProductDeleteView(LoginRequiredMixin, StaffUserMixin, generic.DeleteView):
         return reverse("staff:product-list")
     
     def get_context_data(self, **kwargs):
-        context = super(ProductDeletetView, self).get_context_data(**kwargs)
+        context = super(ProductDeleteView, self).get_context_data(**kwargs)
         context.update({
             "categories": Category.objects.values("name")
         })

@@ -15,6 +15,7 @@ class ProductForm(forms.ModelForm):
             'price',
             'stock_quantity',
             'pickup_location',
+            'location_description',
             'produced',
             'expired',
             'primary_category',
@@ -29,6 +30,7 @@ class ProductForm(forms.ModelForm):
             "produced":"Produced Date (YYYY-MM-DD)",
             'stock_quantity' : "Stock Quantity",
             'pickup_location': "Pick-up Location",
+            'location_description': "Pick-up Location Description",
             "expired":"Expiry Date (YYYY-MM-DD)",
             'primary_category':'Primary Category',
             'secondary_categories':'Secondary Categories'

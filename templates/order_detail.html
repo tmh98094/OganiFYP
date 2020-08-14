@@ -7,7 +7,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 {% if request.user.is_staff %}
-                    <a href="{% url 'staff:staff' %}">Back to Staff Page</a>
+                    <a href="{% url 'staff:staff' %}">Back to previous page</a>
                 {% else %}
                     <a href="{% url 'order' %}">Back to profile</a>
                 {% endif %} 
@@ -31,16 +31,16 @@
                                     <tr>
                                         <td>{{ item.product.title }} x
                                             {{ item.quantity }}</td>
-                                        <td>${{ item.get_total_item_price }}</td>
+                                        <td>RM {{ item.get_total_item_price }}</td>
                                     </tr>
                                     {% endfor %}
                                     <tr>
                                         <td>Subtotal</td>
-                                        <td>${{ order.get_subtotal }}</td>
+                                        <td>RM {{ order.get_subtotal }}</td>
                                     </tr>
                                     <tr>
                                         <td>Total</td>
-                                        <td>${{ order.get_total }}</td>
+                                        <td>RM {{ order.get_total }}</td>
                                     </tr>
                                 </tbody>
                             </table>

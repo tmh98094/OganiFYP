@@ -12,7 +12,16 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 ALLOWED_HOSTS = ['*']
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'tmh0249@gmail.com'
+EMAIL_HOST_PASSWORD = 'yzrayokceluagpwv' #past the key or password app here
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+NOTIFY_EMAIL = env('NOTIFY_EMAIL')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -32,10 +41,10 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'django_extensions',
 ]
 
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
-NOTIFY_EMAIL = env('NOTIFY_EMAIL')
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -76,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'surfood',
         'USER': 'postgres',
-        'PASSWORD': 'BATTLE23Z',
+        'PASSWORD': 'qwerasdf',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -158,13 +167,14 @@ if DEBUG is False:
 
     ALLOWED_HOSTS = ['www.domain.com']
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'surfood',
             'USER': 'postgres',
-            'PASSWORD': 'BATTLE23Z',
+            'PASSWORD': 'qwerasdf',
             'HOST': '127.0.0.1',
             'PORT': '5432',
         }

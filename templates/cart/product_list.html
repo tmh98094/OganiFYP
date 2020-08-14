@@ -8,7 +8,7 @@
                     <div class="breadcrumb__text">
                         <h2>Surplus Foods</h2>
                         <div class="breadcrumb__option">
-                            <a href="./index.html">Home</a>
+                            <a href="/">Home</a>
                             <span>Shop</span>
                         </div>
                     </div>
@@ -25,10 +25,11 @@
                 <div class="col-lg-3 col-md-5">
                     <div class="sidebar">
                         <div class="sidebar__item">
-                            <h4>Categories</h4>
+                            <h4 class="cate">Categories</h4>
                             <ul>
+                                <li class="cate"><a href={% url 'cart:product-list' %}>All Products</a></li>
                                 {% for category in categories %}
-                                    <li><a href="?category={{ category.name }}">{{ category.name }}</a></li>
+                                    <li class="cate"><a href="?category={{ category.name }}">{{ category.name }}</a></li>
                                 {% endfor %}                        
                             </ul>
                         </div>
@@ -38,19 +39,11 @@
                     <div class="filter__item">
                         <div class="row">
                             <div class="col-lg-4 col-md-5">
-                                <!-- <div class="filter__sort">
-                                    <span>Sort By</span>
-                                    <select>
-                                        <option value="0">Default</option>
-                                        <option value="0">Default</option>
-                                    </select>
-                                </div> -->
                             </div>
                             <div class="col-lg-4 col-md-4">
                                 <div class="filter__found">
                                 {% for product in object_list|slice:":1" %}
-                                        <h6>{{ product.get_count}} products found.</h6><br/>
-                                        {{ break }}
+                                        <h6></h6><br/>
                                 {% empty %}
                                             <h6>0 products found.</h6><br/>
                                             <p style="color:red">Sorry, currently there is no items available.</p>
@@ -69,14 +62,14 @@
                                 <div class="col-lg-4 col-md-6 col-sm-6">
                                     <div class="product__item">
                                         <div class="featured__item__pic set-bg">
-                                            <a href="{{ product.get_absolute_url }}"><img src="{{ product.image.url }}" class="featured-products-thumbnail"></a>
+                                            <a href="{{ product.get_absolute_url }}"><img src="{{ product.image.url }}" class="featured-products-list"></a>
                                             <ul class="product__item__pic__hover">
                                                 <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                                             </ul>
                                         </div>
                                         <div class="product__item__text">
-                                            <h6><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h6>
-                                            <h6>Expired on: {{ product.expired }}</h6>
+                                            <h6><a style="font-weight:bold" href="{{ product.get_absolute_url }}">{{ product.title }}</a></h6>
+                                            <h6>Expired on: {{ product.expired | date:'d-m-Y' }}</h6>
                                             <h5>RM{{ product.get_price }}</h5>
                                         </div>
                                     </div>
@@ -84,12 +77,40 @@
                             {% endif %}
                         {% endfor %}
                     </div>
-                    <div class="product__pagination">
-                        <a href="#">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#"><i class="fa fa-long-arrow-right"></i></a>
-                    </div>
+                    {% if page_obj.has_other_pages %}
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                                <div class="site-block-27">
+                                    
+                                        {% if page_obj.has_previous %}
+                                            <a><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></a>
+                                        {% else %}
+                                            <a class='disabled'><span>&laquo;</span></a>
+                                        {% endif %}
+
+                                        {% for i in paginator.page_range %}
+                                            {% if page_obj.number == i %}
+                                                <a class='active'>
+                                                    <span>
+                                                    {{ i }}
+                                                     <span class='sr-only'>(current)</span>
+                                                    </span>
+                                                </a>
+                                            {% else %}
+                                                <a><a href="?page={{ i }}">{{ i }}</a></a>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {% if page_obj.has_next %}
+                                            <a><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></a>
+                                        {% else %}
+                                            <a class='disabled'><span>&raquo;</span></a>
+                                        {% endif %}
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
                 </div>
             </div>
         </div>
