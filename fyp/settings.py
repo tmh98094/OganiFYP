@@ -174,7 +174,11 @@ if DEBUG is False:
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': 'surfood',
             'USER': 'postgres',
+<<<<<<< HEAD
             'PASSWORD': 'qwerasdf',
+=======
+            'PASSWORD': '######',
+>>>>>>> 95497d24d4fcf6fb9ff54583e125c6075369615e
             'HOST': '127.0.0.1',
             'PORT': '5432',
         }
