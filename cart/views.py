@@ -13,7 +13,6 @@ from django.db.models import Q
 from django.utils import timezone
 from datetime import timedelta
 from django.core.exceptions import ObjectDoesNotExist
-import datetime
 
 
 class ProductListView(generic.ListView):
@@ -178,6 +177,7 @@ class PaymentView(generic.TemplateView):
 class ConfirmOrderView(generic.View):
     def post(self, request, *args, **kwargs):
         order = get_or_set_order_session(request)
+        print(request.body)
         body = json.loads(request.body)
         payment = Payment.objects.create(
             order=order,

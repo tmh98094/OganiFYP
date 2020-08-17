@@ -35,9 +35,6 @@ class Address(models.Model):
     class Meta:
         verbose_name_plural = 'Addresses'
 
-class Shop(models.Model):
-    shop_name = models.CharField(max_length=150)
-    shop_address = models.CharField(max_length=150)
 
 class Product(models.Model):
     title = models.CharField(max_length=150)
@@ -53,7 +50,6 @@ class Product(models.Model):
     updated = models.DateTimeField(auto_now=True)
     produced = models.DateField(null=True)
     expired = models.DateField()
-    active = models.BooleanField(default=False)
     primary_category = models.ForeignKey(Category, related_name="primary_products", null=True,on_delete=models.CASCADE)
     secondary_categories = models.ManyToManyField(Category, blank=True)
     
@@ -155,7 +151,7 @@ class Payment(models.Model):
     order = models.ForeignKey(
         Order, on_delete=models.CASCADE, related_name='payments')
     payment_method = models.CharField(max_length=20, choices=(
-        ('Stripe', 'PayPal'),
+        ('PayPal','PayPal'),
     ))
     timestamp = models.DateTimeField(auto_now_add=True)
     successful = models.BooleanField(default=False)

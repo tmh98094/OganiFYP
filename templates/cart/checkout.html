@@ -69,14 +69,14 @@
                                         <span style="text-align:center;">{{ item.quantity }}</span>
                                         </div>
                                         <div class="col-lg-3 col-md-1 col-sm-1 mt-3">
-                                        <span style="float:right">{{ item.get_total_item_price }}</span>
+                                        <span style="float:right">RM {{ item.get_total_item_price }}</span>
                                         </div>
                                                               
                                     {% endfor %}
                                     </div>
                                     </ul>
-                                    <div class="checkout__order__subtotal">Subtotal <span>{{order.get_subtotal}}</span></div>
-                                    <div class="checkout__order__total">Total <span>{{ order.get_total }}</span></div>
+                                    <div class="checkout__order__subtotal">Subtotal <span>RM {{order.get_subtotal}}</span></div>
+                                    <div class="checkout__order__total">Total <span>RM {{ order.get_total }}</span></div>
                                     <p class="justify">The payment can be made via Paypal Balance or Credit/Debit Card.</p>
 
                                     <button type="submit" class="site-btn">PLACE ORDER</button>

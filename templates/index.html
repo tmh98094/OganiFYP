@@ -97,7 +97,7 @@
                 </div>
             </div>
             <div class="row featured__filter">
-                {% for product in products %}
+                {% for product in products|slice:"4" %}
                 <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat py-3 center_img">
                         <div class="featured__item__pic">
                             <a href="{{ product.get_absolute_url }}"><img class="featured-products-thumbnail" src="{{product.image.url}}"></a>
@@ -110,6 +110,7 @@
                 {% endfor %}
             </div>
         </div>
+        
     </section>
 
 

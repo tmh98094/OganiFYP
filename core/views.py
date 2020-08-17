@@ -39,6 +39,7 @@ class AccountView(LoginRequiredMixin, generic.TemplateView):
 
 class HomeView(generic.ListView):
     template_name = 'base1.html'
+    paginate_by = 4
     
     def get_queryset(self):
         qs = Product.objects.all()
